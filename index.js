@@ -8,7 +8,7 @@ app.use(express.json()); // to parse JSON bodies
 
 // Initialize Google Cloud Storage
 const storage = new Storage();
-const bucket = storage.bucket('my-image-gallery-bucket'); // Your bucket name
+const bucket = storage.bucket('image-upload-tndb'); // Your bucket name
 
 // Generate signed URL for upload
 app.post('/generate-signed-url', async (req, res) => {
