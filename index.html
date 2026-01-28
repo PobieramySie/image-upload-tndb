@@ -83,22 +83,22 @@
   <h1>Divyaa & Tarun</h1>
   
   <p>
-    Dziękujemy, że jesteście z nami w tym wyjątkowym dniu. Możecie podzielić się swoimi zdjęciami albo obejrzeć piękne chwile uchwycone przez innych.
+    Thank you for sharing these special days with us. You can share your photos below or view beautiful moments captured by others.
   </p>
 
-  <a href="#" onclick="document.getElementById('fileInput').click();" class="button">Prześlij zdjęcia lub filmy</a>
-  <a href="gallery.html" class="button">Zobacz całą galerię</a>
+  <a href="#" onclick="document.getElementById('fileInput').click();" class="button">Upload photos or videos</a>
+  <a href="gallery.html" class="button">View Gallery</a>
 
   <input type="file" id="fileInput" accept="image/*,video/*" multiple style="display:none" onchange="uploadFiles()" />
 
   <!-- Loading screen -->
   <div id="loadingScreen">
-    <p>Przesyłanie... <span id="progressPercent">0%</span></p>
+    <p>Uploading... <span id="progressPercent">0%</span></p>
     <progress id="uploadProgress" value="0" max="100"></progress>
   </div>
 
   <footer>
-    Po załadowaniu plików pojawi się potwierdzenie ich przesłania. Dziękujemy za wspólne wspomnienia!
+    After a succesful upload, you will see a confirmation message. Thank you for the memories!
   </footer>
 
   <script>
@@ -135,7 +135,7 @@
           }),
         });
 
-        if (!response.ok) throw new Error('Nie udało się wygenerować URL do przesłania.');
+        if (!response.ok) throw new Error('Failed to generate an upload URL.');
 
         const { signedUrl, publicUrl } = await response.json();
 
@@ -170,7 +170,7 @@
             }
           };
 
-          xhr.onerror = () => reject(new Error('Błąd sieci podczas przesyłania.'));
+          xhr.onerror = () => reject(new Error('Network error occured during upload.'));
           xhr.send(file);
         });
 
@@ -179,7 +179,7 @@
 
       loadingScreen.style.display = 'none';
       input.value = '';
-      alert('Przesłane pliki:\n' + uploadedUrls.join('\n'));
+      alert('Uploaded files:\n' + uploadedUrls.join('\n'));
 
       progressBar.value = 0;
       progressText.textContent = '0%';
@@ -187,14 +187,14 @@
     } catch (err) {
       loadingScreen.style.display = 'none';
       console.error(err);
-      alert('Błąd podczas przesyłania: ' + err.message);
+      alert('Upload error: ' + err.message);
     }
   }
 
   // Optional: warn before leaving if uploading
   window.onbeforeunload = function () {
     if (document.getElementById('loadingScreen').style.display === 'flex') {
-      return 'Trwa przesyłanie plików. Czy na pewno chcesz opuścić stronę?';
+      return 'Your upload is in progress. Do you want to exit the page?';
     }
   };
   </script>
