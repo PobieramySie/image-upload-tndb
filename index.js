@@ -44,6 +44,17 @@ app.post('/generate-signed-url', async (req, res) => {
 app.get('/images', async (req, res) => {
   try {
     const [files] = await bucket.getFiles();
+    const urls = files.map(file => `https://storage.googleapis.com/${bucket.name}/${file.name}`);
+    res.json(urls);
+  } catch (err) {
+    console.error('GCS LIST ERROR:', err); // <--- important!
+    res.status(500).json({ error: 'Failed to list images', details: err.message });
+  }
+});
+
+/***app.get('/images', async (req, res) => {
+  try {
+    const [files] = await bucket.getFiles();
     const urls = files.map(file =>
       `https://storage.googleapis.com/${bucket.name}/${file.name}`
     );
@@ -52,7 +63,7 @@ app.get('/images', async (req, res) => {
     console.error('Error fetching images:', err);
     res.status(500).json({ error: 'Failed to list images' });
   }
-});
+}); ***/
 
 // Start the server on the Cloud Run expected port
 const PORT = process.env.PORT || 8080;
