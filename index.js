@@ -47,7 +47,7 @@ app.get('/images', async (req, res) => {
     const urls = files.map(file => `https://storage.googleapis.com/${bucket.name}/${file.name}`);
     res.json(urls);
   } catch (err) {
-    console.error('GCS LIST ERROR:', err); // <--- important!
+    console.error('GCS LIST ERROR:', err); 
     res.status(500).json({ error: 'Failed to list images', details: err.message });
   }
 });
