@@ -193,7 +193,32 @@
     return url.match(/\.(mp4|webm|ogg)$/i);
   }
 
-  async function fetchAllImages() {
+    async function fetchAllImages() {
+  try {
+    console.log('API_URL:', API_URL);
+
+    const res = await fetch(`${API_URL}/images`);
+    console.log('Response status:', res.status);
+    console.log('Response ok:', res.ok);
+
+    const text = await res.text();
+    console.log('Raw response:', text);
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}: ${text}`);
+    }
+
+    allUrls = JSON.parse(text);
+    currentIndex = 0;
+    document.getElementById('gallery').innerHTML = '';
+    displayImages();
+  } catch (err) {
+    console.error('FETCH ERROR:', err);
+    alert('Failed to load the gallery. Please try again later.');
+  }
+}
+    
+  /*** async function fetchAllImages() {
     try {
       const res = await fetch(`${API_URL}/images`);
       if (!res.ok) throw new Error('Failed to load gallery. Please try again later.');
@@ -205,7 +230,7 @@
       console.error(err);
       alert('Failed to load the gallery. Please try again later.');
     }
-  }
+  } ***/
 
   function displayImages() {
     const gallery = document.getElementById('gallery');
